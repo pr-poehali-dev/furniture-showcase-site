@@ -7,9 +7,11 @@ import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
+    setIsMobileMenuOpen(false);
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -69,11 +71,47 @@ const Index = () => {
                 Контакты
               </button>
             </div>
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Icon name="Menu" size={24} />
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="md:hidden"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <Icon name={isMobileMenuOpen ? "X" : "Menu"} size={24} />
             </Button>
           </div>
         </nav>
+        
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-white border-b border-border animate-slide-down">
+            <div className="container mx-auto px-6 py-4 flex flex-col gap-4">
+              <button 
+                onClick={() => scrollToSection('catalog')}
+                className="text-left text-sm font-medium text-foreground/70 hover:text-foreground transition-colors py-2"
+              >
+                Каталог
+              </button>
+              <button 
+                onClick={() => scrollToSection('about')}
+                className="text-left text-sm font-medium text-foreground/70 hover:text-foreground transition-colors py-2"
+              >
+                О магазине
+              </button>
+              <button 
+                onClick={() => scrollToSection('delivery')}
+                className="text-left text-sm font-medium text-foreground/70 hover:text-foreground transition-colors py-2"
+              >
+                Доставка
+              </button>
+              <button 
+                onClick={() => scrollToSection('contacts')}
+                className="text-left text-sm font-medium text-foreground/70 hover:text-foreground transition-colors py-2"
+              >
+                Контакты
+              </button>
+            </div>
+          </div>
+        )}
       </header>
 
       <main className="pt-20">
